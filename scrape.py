@@ -2,6 +2,7 @@ import urllib.request
 from urllib.parse import urljoin  # URLを扱うモジュールを追加
 from bs4 import BeautifulSoup as BS
 
+
 class Scraper:
     def __init__(self, site):
         self.site = site
@@ -10,19 +11,20 @@ class Scraper:
     def scrape(self):
         r = urllib.request.urlopen(self.site)
         html = r.read()
-        parser = 'html.parser'
+        parser = "html.parser"
         sp = BS(html, parser)
-        for tag in sp.find_all('a'):
-            url = tag.get('href')
+        for tag in sp.find_all("a"):
+            url = tag.get("href")
             if url is None:
                 continue
-            if 'atcl/contents' not in url:  # 'atcl/contents' を含まないURLは対象外にする
+            if "atcl/contents" not in url:  # 'atcl/contents' を含まないURLは対象外にする
                 continue
             full_url = urljoin(r.url, url)  # ドメイン名を含むURLに変換
             if full_url in self.urls:  # 既に収集済みのURLは対象外にする
                 continue
             self.urls.add(full_url)  # 収集済みURLに追加
-            print('\n' + full_url)  # URLを表示
+            print("\n" + full_url)  # URLを表示
 
-news = 'https://xtrend.nikkei.com/atcl/contents/new/'  # ニュース取得元サイトを変更
+
+news = "https://xtrend.nikkei.com/atcl/contents/new/"  # ニュース取得元サイトを変更
 Scraper(news).scrape()

@@ -2,16 +2,25 @@ from random import shuffle
 
 
 class Card:
-    suits = ["スペード",
-             "ハート",
-             "ダイヤ",
-             "クラブ"]
+    suits = ["スペード", "ハート", "ダイヤ", "クラブ"]
 
-    values = [None, None,"２", "３",
-              "４", "５", "６", "７",
-              "８", "９", "１０",
-              "ジャック", "クイーン",
-              "キング", "エース"]
+    values = [
+        None,
+        None,
+        "２",
+        "３",
+        "４",
+        "５",
+        "６",
+        "７",
+        "８",
+        "９",
+        "１０",
+        "ジャック",
+        "クイーン",
+        "キング",
+        "エース",
+    ]
 
     def __init__(self, v, s):
         """スート（マーク）も値も整数値です"""
@@ -33,9 +42,7 @@ class Card:
         return False
 
     def __repr__(self):
-        v = self.suits[self.suit] +\
-            " の " + \
-            self.values[self.value]
+        v = self.suits[self.suit] + " の " + self.values[self.value]
         return v
 
 
@@ -44,9 +51,7 @@ class Deck:
         self.cards = []
         for i in range(2, 15):
             for j in range(4):
-                self.cards\
-                    .append(Card(i,
-                                 j))
+                self.cards.append(Card(i, j))
         shuffle(self.cards)
 
     def draw(self):
@@ -76,8 +81,7 @@ class Game:
 
     def print_draw(self, p1, p2):
         d = "{} は {} 、{} は {} を引きました"
-        print(d.format(
-            p1.name, p1.card, p2.name, p2.card))
+        print(d.format(p1.name, p1.card, p2.name, p2.card))
 
     def play_game(self):
         cards = self.deck.cards
@@ -85,7 +89,7 @@ class Game:
         while len(cards) >= 2:
             m = "q で終了、それ以外のキーで play:"
             response = input(m)
-            if response == 'q':
+            if response == "q":
                 break
             self.p1.card = self.deck.draw()
             self.p2.card = self.deck.draw()
@@ -97,10 +101,8 @@ class Game:
                 self.p2.wins += 1
                 self.print_winner(self.p2)
 
-        win = self.winner(self.p1,
-                         self.p2)
-        print("ゲーム終了、{}"
-              .format(win))
+        win = self.winner(self.p1, self.p2)
+        print("ゲーム終了、{}".format(win))
 
     def winner(self, p1, p2):
         if p1.wins > p2.wins:
@@ -108,6 +110,7 @@ class Game:
         if p1.wins < p2.wins:
             return "{} の勝利です！".format(p2.name)
         return "引き分け！"
+
 
 game = Game()
 game.play_game()
